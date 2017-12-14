@@ -2,8 +2,12 @@ import coinbase_analysis as cba
 from coinbase.wallet.client import Client
 import json
 
-API_KEY = '' # your API key
-API_SECRET = '' # your API secret
+# read API key and secret from file
+api_file = open('api_key', 'r')
+API_KEY = api_file.readline()[:-1] # your API key
+API_SECRET = api_file.readline() # your API secret
+print 'API key:', API_KEY
+
 client = Client(API_KEY, API_SECRET)
 
 #user = client.get_current_user()
