@@ -2,7 +2,7 @@ import coinbase as cb
 from coinbase.wallet.client import Client
 import json
 
-client = Client('tjSOJDfiJ5pX2xoD', 'hSaGcd5jvGrbi9O5RwCFIyxz2qt3EjLT')
+client = Client('', '')
 
 user = client.get_current_user()
 user_as_json_string = json.dumps(user)
