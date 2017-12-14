@@ -12,7 +12,7 @@ def json_account_to_dict(client):
 #Grab the account ID for: ALL(dict), BTC, ETH or LTC(id string)
 def get_account_id(client, currency = "ALL"):
     if currency not in CURRENCY_TYPE and currency != "ALL":
-        return "you suck"
+        raise TypeError('Wrong currency type: %s' % currency)
     wallet_name = currency + str(" Wallet")
     accounts_dict = json_account_to_dict(client)
     num_of_accounts = len(accounts_dict)
