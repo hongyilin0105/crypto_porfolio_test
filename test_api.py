@@ -2,7 +2,9 @@ import coinbase as cb
 from coinbase.wallet.client import Client
 import json
 
-client = Client('', '')
+API_KEY = '' # your API key
+API_SECRET = '' # your API secret
+client = Client(API_KEY, API_SECRET)
 
 user = client.get_current_user()
 user_as_json_string = json.dumps(user)
