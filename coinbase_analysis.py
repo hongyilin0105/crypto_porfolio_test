@@ -50,11 +50,32 @@ def get_total_account_balance_USD(client):
     return sum([float(i) for i in get_account_balance(client).values()])
 
 
-
-
 # Working on:
 ## grab all "completed" transaction history in a currency wallet
-## interested type includes: buy, sell, send, request
+## interested type includes: buy, sell, send
 ## documentation on Transaction class: https://developers.coinbase.com/api/v2#transaction-resource
-### all_BTC_transactions_dict = json.loads(json.dumps(client.get_transactions(get_account_id(client,"BTC"))))
-### cleaned_all_BTC_transactions_dict = json.loads(json.dumps(all_BTC_transactions_dict['data']))
+## assuming native currency is USD only for now
+## note: transaction on the way but not instantly available in wallet are not counted in the method
+def calc_roi_alltime(client, currency):
+    all_transactions = json.loads(json.dumps(client.get_transactions(get_account_id(client,currency))))
+    cleaned_all_transactions = json.loads(json.dumps(all_transactions['data']))
+    completed_transactions = [cleaned_all_transactions[a] for a in range(len(cleaned_all_transactions)) if cleaned_all_transactions[a].get('status') == 'completed']
+    all_type_list = [completed_transactions[a].get('type') for a in range(len(completed_transactions))]
+    buy_id_list = [i for i, x in enumerate(all_type_list) if x == "buy"]
+    sell_id_list = [i for i, x in enumerate(all_type_list) if x == "sell"]
+    send_id_list = [i for i, x in enumerate(all_type_list) if x == "send"]
+    # record USD value sum of all buy
+    all_buy_value = sum([float(completed_transactions[a].get('native_amount').get('amount')) for a in buy_id_list])
+    # record USD value sum of all sell
+    all_sell_value = sum([float(completed_transactions[a].get('native_amount').get('amount')) for a in sell_id_list])
+    all_send_value = sum([float(completed_transactions[a].get('native_amount').get('amount')) for a in send_id_list])
+    # grab the current USD value in the currency wallet
+    current_balance = float(get_account_balance(client, currency))
+    r = - all_sell_value - all_send_value + current_balance - all_buy_value
+    roi = r*1.0/all_buy_value
+    return roi
+
+
+
+
+
