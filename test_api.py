@@ -17,3 +17,8 @@ client = Client(API_KEY, API_SECRET)
 print cba.get_account_balance(client, ifUSD = False)
 print cba.get_account_balance(client, "ETH", False)
 print cba.get_total_account_balance_USD(client)
+
+#Calculate alltime ROI for each wallet
+print "BTC roi: " + str(cba.calc_roi_alltime(client, "BTC"))
+print "ETH roi: " + str(cba.calc_roi_alltime(client, "ETH"))
+print "LTC roi: " + str(cba.calc_roi_alltime(client, "LTC"))
