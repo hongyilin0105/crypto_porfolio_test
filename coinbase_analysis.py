@@ -4,17 +4,17 @@ import json
 
 CURRENCY_TYPE = ["BTC", "ETH", "LTC"]
 
-def json_account_to_dict(client):
-    all_accounts_dict = json.loads(json.dumps(client.get_accounts()))
-    cleaned_accounts_dict = json.loads(json.dumps(all_accounts_dict['data']))
-    return cleaned_accounts_dict
+def json_account_to_list(client):
+    all_accounts = json.loads(json.dumps(client.get_accounts()))
+    cleaned_accounts = json.loads(json.dumps(all_accounts['data']))
+    return cleaned_accounts
 
 #Grab the account ID for: ALL(dict), BTC, ETH or LTC(id string)
 def get_account_id(client, currency = "ALL"):
     if currency not in CURRENCY_TYPE and currency != "ALL":
         raise TypeError('Wrong currency type: %s' % currency)
     wallet_name = currency + str(" Wallet")
-    accounts_dict = json_account_to_dict(client)
+    accounts_dict = json_account_to_list(client)
     num_of_accounts = len(accounts_dict)
     res = {}
     for a in range(num_of_accounts):
@@ -28,7 +28,7 @@ def get_account_id(client, currency = "ALL"):
 #For US-native accounts, grab the current account balance for: BTC, ETH or LTC(float)
 #Default: USD value for all currencies
 def get_account_balance(client, currency = "ALL", ifUSD = True):
-    accounts_dict = json_account_to_dict(client)
+    accounts_dict = json_account_to_list(client)
     num_of_accounts = len(accounts_dict)
     res = {}
     if ifUSD:
