@@ -5,7 +5,7 @@ import json
 # read API key and secret from file
 api_file = open('api_key.txt', 'r')
 API_KEY = api_file.readline()[:-1] # your API key
-API_SECRET = api_file.readline() # your API secret
+API_SECRET = api_file.readline()[:-1] # your API secret
 print 'API key:', API_KEY
 
 client = Client(API_KEY, API_SECRET)
