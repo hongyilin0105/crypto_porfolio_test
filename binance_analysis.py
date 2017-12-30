@@ -12,4 +12,5 @@ with open('interested_pairs.txt', 'r') as pairs:
     for pair in pairs:
         symbol = string.replace(pair, '\n','')
         print symbol +":"
-        print client.get_historical_trades(symbol=symbol)
+        print client.get_my_trades(symbol=symbol)
+
