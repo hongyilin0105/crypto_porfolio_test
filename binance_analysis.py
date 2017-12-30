@@ -1,4 +1,4 @@
-#import binance
+#pip install python-binance first
 from binance.client import Client
 import string
 
